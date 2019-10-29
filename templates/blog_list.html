@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="row ">
+        <div class="col-8 ">
+        {% for post in post %}
+            <div class="media border p-3 mt-4 mr-2">
+                <img class="mr-3 mt-3 rounded-circle" src="{{ post.image.url }}" style="width:60px;height:60px; ">
+                <div class="media-body">
+                    <h4>{{ post.author }} <small><i>{{ post.timestamp }}</i></small></h4>
+                    <p>{{ post.title }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        <div class="col-sm-12 col-md-4 col-xs-12">
+            <div class="card p-3 mt-4">
+                <div class="follow_us-header">
+                    <h4>Follow us</h4>
+                </div>
+                <div class="follow_us-form">
+                    <ul>
+                        <li>
+                            <a >Machine Learning</a>
+                        </li>
+                        <li>
+                            <a >Data Science</a>
+                        </li>
+                        <li>
+                            <a >Web Development</a>
+                        </li>
+                        <li>
+                            <a >Web Scraping</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    {% if is_paginated %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" aria-label="Previous" href="?page={{ page_obj.previous_page_number }}">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                {% else %}
+                     <li class="page-item disable">
+                        <a class="page-link" aria-label="Previous"}">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                     </li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                    {% if page_obj.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                     <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                     <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}
